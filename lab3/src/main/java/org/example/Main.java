@@ -1,11 +1,16 @@
 package org.example;
 
 import java.util.Scanner;
-import java.util.Arrays;
 import java.util.List;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.stream.Collectors;
 
 public class Main {
+    private static List<TDAOption> opcionesGuardadas = new ArrayList<>();
+    private static List<TDAFlow> flujosGuardados = new ArrayList<>();
     public static void main(String[] args) {
+
         Scanner scanner = new Scanner(System.in);
 
         // Pedir al usuario que ingrese su nombre
@@ -34,59 +39,126 @@ public class Main {
         } else {
             System.out.println("Opción no válida.");
         }
+        scanner.close();
     }
 
     private static void mostrarMenuAdministrador(Scanner scanner) {
-        System.out.println("### Menú Administrador ###");
-        System.out.println("1. Agregar un Chatbot");
-        System.out.println("2. Modificar un Chatbot");
-        // ... más opciones para administrador
-        int opcionAdministrador = scanner.nextInt();
+        boolean continuar = true;
+        while (continuar) {
+            System.out.println("### Menú Administrador ###");
+            System.out.println("1. Agregar una Opcion");
+            System.out.println("2. Agregar un Flujo");
+            System.out.println("3. Mostrar Opciones Guardadas");
+            System.out.println("4. Mostrar Flujos Guardados");
+            System.out.println("5. Salir");
+            // ... más opciones para administrador
+            System.out.print("Seleccione una opción: ");
+            int opcionAdministrador = scanner.nextInt();
 
-        if (opcionAdministrador == 1) {
-            // Leer el código de la opción
-            System.out.print("Ingrese el código de la opción: ");
-            int code = scanner.nextInt();
+            switch (opcionAdministrador) {
+                case 1:
+                    // Leer el código de la opción
+                    System.out.print("Ingrese el código de la opción: ");
+                    int code = scanner.nextInt();
 
-            // Limpiar el buffer de entrada (importante después de leer números)
-            scanner.nextLine();
+                    // Limpiar el buffer de entrada (importante después de leer números)
+                    scanner.nextLine();
 
-            // Leer el mensaje
-            System.out.print("Ingrese el mensaje de la opción: ");
-            String message = scanner.nextLine();
+                    // Leer el mensaje
+                    System.out.print("Ingrese el mensaje de la opción: ");
+                    String message = scanner.nextLine();
 
-            // Leer el código de enlace del chatbot
-            System.out.print("Ingrese el código de enlace del chatbot: ");
-            int chatbotCodeLink = scanner.nextInt();
+                    // Leer el código de enlace del chatbot
+                    System.out.print("Ingrese el código de enlace del chatbot: ");
+                    int chatbotCodeLink = scanner.nextInt();
 
-            // Leer el código de enlace del flujo inicial
-            System.out.print("Ingrese el código de enlace del flujo inicial: ");
-            int initialFlowCodeLink = scanner.nextInt();
+                    // Leer el código de enlace del flujo inicial
+                    System.out.print("Ingrese el código de enlace del flujo inicial: ");
+                    int initialFlowCodeLink = scanner.nextInt();
 
-            // Limpiar el buffer de entrada
-            scanner.nextLine();
+                    // Limpiar el buffer de entrada
+                    scanner.nextLine();
 
-            // Leer palabras clave (separadas por comas)
-            System.out.print("Ingrese palabras clave (separadas por comas): ");
-            String keywordsInput = scanner.nextLine();
-            List<String> keywords = Arrays.asList(keywordsInput.split(","));
+                    // Leer palabras clave (separadas por comas)
+                    System.out.print("Ingrese palabras clave (separadas por comas): ");
+                    String keywordsInput = scanner.nextLine();
+                    List<String> keywords = Arrays.asList(keywordsInput.split(","));
 
-            // Crear la instancia de Option
-            TDAOption option = new TDAOption(code, message, chatbotCodeLink, initialFlowCodeLink, keywords);
+                    // Crear la instancia de Option
+                    TDAOption option = new TDAOption(code, message, chatbotCodeLink, initialFlowCodeLink, keywords);
+                    opcionesGuardadas.add(option);
+                    break;
 
-            // Mostrar los valores ingresados
-            System.out.println("Option creada:");
-            System.out.println("Código: " + option.getCode());
-            System.out.println("Mensaje: " + option.getMessage());
-            System.out.println("Código de Enlace del Chatbot: " + option.getChatbotCodeLink());
-            System.out.println("Código de Enlace del Flujo Inicial: " + option.getInitialFlowCodeLink());
-            System.out.println("Palabras Clave: " + option.getKeywords());
+                case 2:
+
+                    System.out.print("Ingrese el código del flujo: ");
+                    int idFlow = scanner.nextInt();
+                    scanner.nextLine();
+
+                    // Leer el mensaje
+                    System.out.print("Ingrese el mensaje del flujo: ");
+                    String messageFlow = scanner.nextLine();
+
+                    System.out.print("Ingrese los códigos de las opciones que quiere agregar (separados por comas): ");
+                    String opcionesInput = scanner.nextLine();
+                    List<Integer> codigosOpciones = Arrays.stream(opcionesInput.split(","))
+                            .map(String::trim)
+                            .map(Integer::parseInt)
+                            .collect(Collectors.toList());
+
+                    List<TDAOption> opcionesParaAgregar = opcionesGuardadas.stream()
+                            .filter(opcion -> codigosOpciones.contains(opcion.getCode()))
+                            .collect(Collectors.toList());
+
+                    TDAFlow flujo = new TDAFlow(idFlow, messageFlow, opcionesParaAgregar);
+                    flujosGuardados.add(flujo);
+                    break;
+
+                case 3:
+                    if (opcionesGuardadas.isEmpty()) {
+                        System.out.println("No hay opciones guardadas.");
+                    } else {
+                        System.out.println("Opciones Guardadas:");
+                        for (TDAOption options : opcionesGuardadas) {
+                            // Asumiendo que TDAOption tiene métodos getters para acceder a sus atributos
+                            System.out.println("-----------------------------------");
+                            System.out.println("Código: " + options.getCode());
+                            System.out.println("Mensaje: " + options.getMessage());
+                            System.out.println("Código de Enlace del Chatbot: " + options.getChatbotCodeLink());
+                            System.out.println("Código de Enlace del Flujo Inicial: " + options.getInitialFlowCodeLink());
+                            System.out.println("Palabras Clave: " + options.getKeywords());
+                            System.out.println("-----------------------------------");
+                        }
+                    }
+                    break;
+                case 4:
+                    if (flujosGuardados.isEmpty()) {
+                        System.out.println("No hay flujos guardados.");
+                    } else {
+                        System.out.println("Flujos Guardados:");
+                        for (TDAFlow flujos : flujosGuardados) {
+                            System.out.println("-----------------------------------");
+                            System.out.println("ID del Flujo: " + flujos.getId());
+                            System.out.println("Mensaje del Flujo: " + flujos.getNameMsg());
+                            // Asumiendo que TDAFlow tiene un método para obtener las opciones
+                            System.out.println("Opciones del Flujo: ");
+                            for (TDAOption opcion : flujos.getOptions()) {
+                                System.out.println("\tCódigo de Opción: " + opcion.getCode());
+                            }
+                            System.out.println("-----------------------------------");
+                        }
+                    }
+                    break;
+                case 5:
+                    continuar = false;
+                    break;
+                default:
+                    System.out.println("Opción no válida.");
+                    break;
+            }
         }
-
-
-
-        // Implementar la lógica para manejar la elección del administrador
     }
+
 
     private static void mostrarMenuUsuario(Scanner scanner) {
         System.out.println("### Menú Usuario ###");
