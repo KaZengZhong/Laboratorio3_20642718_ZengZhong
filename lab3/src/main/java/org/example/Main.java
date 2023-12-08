@@ -4,7 +4,6 @@ import java.util.Scanner;
 import java.util.List;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.stream.Collectors;
 
 public class Main {
     private static List<TDAOption> opcionesGuardadas = new ArrayList<>();
@@ -101,14 +100,27 @@ public class Main {
 
                     System.out.print("Ingrese los códigos de las opciones que quiere agregar (separados por comas): ");
                     String opcionesInput = scanner.nextLine();
-                    List<Integer> codigosOpciones = Arrays.stream(opcionesInput.split(","))
-                            .map(String::trim)
-                            .map(Integer::parseInt)
-                            .collect(Collectors.toList());
 
-                    List<TDAOption> opcionesParaAgregar = opcionesGuardadas.stream()
-                            .filter(opcion -> codigosOpciones.contains(opcion.getCode()))
-                            .collect(Collectors.toList());
+                    String[] partesOpciones = opcionesInput.split(",");
+                    List<Integer> codigosOpciones = new ArrayList<>();
+
+                    // Convertir las cadenas de los códigos a enteros
+                    for (String parte : partesOpciones) {
+                        try {
+                            codigosOpciones.add(Integer.parseInt(parte.trim()));
+                        } catch (NumberFormatException e) {
+                            System.out.println("Se ha ingresado un código no válido: " + parte.trim());
+                            // Manejar el error o continuar
+                        }
+                    }
+
+                    List<TDAOption> opcionesParaAgregar = new ArrayList<>();
+                    // Filtrar las opciones basado en los códigos
+                    for (TDAOption opcion : opcionesGuardadas) {
+                        if (codigosOpciones.contains(opcion.getCode())) {
+                            opcionesParaAgregar.add(opcion);
+                        }
+                    }
 
                     TDAFlow flujo = new TDAFlow(idFlow, messageFlow, opcionesParaAgregar);
                     flujosGuardados.add(flujo);

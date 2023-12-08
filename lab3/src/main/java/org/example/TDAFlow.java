@@ -6,7 +6,7 @@ import java.util.List;
 import java.util.Set;
 
 public class TDAFlow {
-    private int id;W
+    private int id;
     private String nameMsg;
     private List<TDAOption> options;
 
@@ -24,6 +24,17 @@ public class TDAFlow {
             }
         }
     }
+
+    public void addOption(TDAOption option) {
+        for (TDAOption existingOption : options) {
+            if (existingOption.getCode() == option.getCode()) {
+                System.out.println("No se puede agregar la opción: ya existe una opción con el código " + option.getCode());
+                return; // Salimos del método si encontramos una opción duplicada
+            }
+        }
+        options.add(option); // Agregamos la opción si no se encontraron duplicados
+    }
+
 
     // Getters y posibles setters
     public int getId() {
