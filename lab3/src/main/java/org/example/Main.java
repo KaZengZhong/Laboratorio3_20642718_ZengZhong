@@ -6,8 +6,8 @@ import java.util.ArrayList;
 import java.util.Arrays;
 
 public class Main {
-    private static List<TDAOption> opcionesGuardadas = new ArrayList<>();
-    private static List<TDAFlow> flujosGuardados = new ArrayList<>();
+    private static List<Option> opcionesGuardadas = new ArrayList<>();
+    private static List<Flow> flujosGuardados = new ArrayList<>();
     public static void main(String[] args) {
 
         Scanner scanner = new Scanner(System.in);
@@ -84,7 +84,7 @@ public class Main {
                     List<String> keywords = Arrays.asList(keywordsInput.split(","));
 
                     // Crear la instancia de Option
-                    TDAOption option = new TDAOption(code, message, chatbotCodeLink, initialFlowCodeLink, keywords);
+                    Option option = new Option(code, message, chatbotCodeLink, initialFlowCodeLink, keywords);
                     opcionesGuardadas.add(option);
                     break;
 
@@ -114,15 +114,15 @@ public class Main {
                         }
                     }
 
-                    List<TDAOption> opcionesParaAgregar = new ArrayList<>();
+                    List<Option> opcionesParaAgregar = new ArrayList<>();
                     // Filtrar las opciones basado en los códigos
-                    for (TDAOption opcion : opcionesGuardadas) {
+                    for (Option opcion : opcionesGuardadas) {
                         if (codigosOpciones.contains(opcion.getCode())) {
                             opcionesParaAgregar.add(opcion);
                         }
                     }
 
-                    TDAFlow flujo = new TDAFlow(idFlow, messageFlow, opcionesParaAgregar);
+                    Flow flujo = new Flow(idFlow, messageFlow, opcionesParaAgregar);
                     flujosGuardados.add(flujo);
                     break;
 
@@ -131,7 +131,7 @@ public class Main {
                         System.out.println("No hay opciones guardadas.");
                     } else {
                         System.out.println("Opciones Guardadas:");
-                        for (TDAOption options : opcionesGuardadas) {
+                        for (Option options : opcionesGuardadas) {
                             // Asumiendo que TDAOption tiene métodos getters para acceder a sus atributos
                             System.out.println("-----------------------------------");
                             System.out.println("Código: " + options.getCode());
@@ -148,13 +148,13 @@ public class Main {
                         System.out.println("No hay flujos guardados.");
                     } else {
                         System.out.println("Flujos Guardados:");
-                        for (TDAFlow flujos : flujosGuardados) {
+                        for (Flow flujos : flujosGuardados) {
                             System.out.println("-----------------------------------");
                             System.out.println("ID del Flujo: " + flujos.getId());
                             System.out.println("Mensaje del Flujo: " + flujos.getNameMsg());
                             // Asumiendo que TDAFlow tiene un método para obtener las opciones
                             System.out.println("Opciones del Flujo: ");
-                            for (TDAOption opcion : flujos.getOptions()) {
+                            for (Option opcion : flujos.getOptions()) {
                                 System.out.println("\tCódigo de Opción: " + opcion.getCode());
                             }
                             System.out.println("-----------------------------------");
