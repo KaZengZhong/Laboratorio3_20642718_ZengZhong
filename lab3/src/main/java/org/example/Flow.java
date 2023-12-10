@@ -15,7 +15,6 @@ public class Flow {
         this.id = id;
         this.nameMsg = nameMsg;
         this.optionIds = new HashSet<>();
-
         this.options = new ArrayList<>();
         if (options != null) {
             for (Option option : options) {
@@ -29,7 +28,6 @@ public class Flow {
             System.out.println("Error: La opción es nula.");
             return;
         }
-
         // Verifica si la opción ya existe en el flujo
         if (!optionIds.contains(option.getCode())) {
             options.add(option);
@@ -44,25 +42,12 @@ public class Flow {
         return id;
     }
 
-    public void setId(int id) {
-        this.id = id;
-    }
-
     public String getNameMsg() {
         return nameMsg;
-    }
-
-    public void setNameMsg(String nameMsg) {
-        this.nameMsg = nameMsg;
     }
 
     public List<Option> getOptions() {
         return new ArrayList<>(options);
     }
-
-    public void setOptions(List<Option> options) {
-        this.options = new ArrayList<>(options);
-    }
-
 }
 

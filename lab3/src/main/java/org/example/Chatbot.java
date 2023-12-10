@@ -11,7 +11,7 @@ public class Chatbot {
     private String welcomeMessage;
     private int startFlowId;
     private List<Flow> flows;
-    private Set<Integer> flowIds; // Para verificar la unicidad de los IDs de flujos
+    private Set<Integer> flowIds;
 
     public Chatbot(int chatbotID, String name, String welcomeMessage, int startFlowId, List<Flow> flows) {
         this.chatbotID = chatbotID;
@@ -20,8 +20,6 @@ public class Chatbot {
         this.startFlowId = startFlowId;
         this.flows = new ArrayList<>();
         this.flowIds = new HashSet<>();
-
-        // Añadir flujos, verificando la unicidad de sus IDs
         if (flows != null) {
             for (Flow flow : flows) {
                 chatbotAddFlow(flow);
@@ -35,7 +33,6 @@ public class Chatbot {
             System.out.println("Error: El flujo es nulo.");
             return;
         }
-
         // Verifica si el flujo ya existe en el chatbot
         if (!flowIds.contains(flow.getId())) {
             flows.add(flow);
@@ -46,16 +43,11 @@ public class Chatbot {
     }
 
     // Getters
+    public String getName() {return name;}
+
+    public String getWelcomeMessage(){ return welcomeMessage;}
     public int getChatbotID() {
         return chatbotID;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public String getWelcomeMessage() {
-        return welcomeMessage;
     }
 
     public int getStartFlowId() {
@@ -68,31 +60,11 @@ public class Chatbot {
     }
 
     // Setters
-    public void setChatbotID(int chatbotID) {
-        this.chatbotID = chatbotID;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public void setWelcomeMessage(String welcomeMessage) {
-        this.welcomeMessage = welcomeMessage;
-    }
-
     public void setStartFlowId(int startFlowId) {
         this.startFlowId = startFlowId;
     }
 
-    public void setFlows(List<Flow> flows) {
-        this.flows.clear();
-        this.flowIds.clear();
-        if (flows != null) {
-            for (Flow flow : flows) {
-                chatbotAddFlow(flow);
-            }
-        }
-    }
+
 
 }
 
