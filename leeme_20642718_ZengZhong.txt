@@ -1,0 +1,3 @@
+El programa se ejecuta en JDK 11.0.21.
+Las opciones, flujos, chatbots y sistemas ya creados corresponden al script de pruebas
+del laboratorio anterior (el sistema ya creado se llama "Chatbots Paradigmas"). 

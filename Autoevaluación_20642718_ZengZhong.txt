@@ -1,0 +1,26 @@
+Requerimientos No Funcionales
+Autoevaluacion        1
+Lenguaje              1
+Interacciones         1
+Uso del paradigma     1
+Prerrequisitos        1
+Documentacion         1
+Organizacion          1
+Diagrama de analisis  0.75
+Diagrama de diseño    0.75
+Uso de git            0.5
+
+Requerimientos Funcionales
+Option			1
+Flow			1
+Flow-add-option		0.75
+Chatbot			1
+Chatbot-add-flow	0.75
+System			1
+System-add-chatbot	0.75
+System-add-user		1
+System-login		1
+System-logout		1
+System-talk-rec		0.5
+System-synthesis	1
+System-simultate	0

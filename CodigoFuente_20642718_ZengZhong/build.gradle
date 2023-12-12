@@ -1,0 +1,16 @@
+plugins {
+    id 'application'
+}
+
+repositories {
+    mavenCentral()
+}
+
+run {
+   standardInput = System.in
+}
+
+application {
+   mainClass = 'Lab3_20642718_ZengZhong.Main'
+}
+
